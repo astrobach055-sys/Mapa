@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Mapa de Gijón</title>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+    <style>
+        #map { height: 100vh; width: 100%; margin: 0; padding: 0; }
+        body { margin: 0; padding: 0; }
+    </style>
+</head>
+<body>
+    <div id="map"></div>
+    
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+    <script>
+        // MAPA DE GIJÓN
+        var map = L.map('map').setView([43.5322, -5.6611], 14);
+        
+        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+            attribution: 'Mapa: OpenStreetMap'
+        }).addTo(map);
+        
+        // MARCADOR EN EL CENTRO
+        L.marker([43.5322, -5.6611])
+            .addTo(map)
+            .bindPopup('🏖️ Gijón - Centro')
+            .openPopup();
+            
+        // PLAYA SAN LORENZO
+        L.marker([43.5400, -5.6500])
+            .addTo(map)
+            .bindPopup('🏄 Playa de San Lorenzo');
+            
+        // LABORAL
+        L.marker([43.5250, -5.6100])
+            .addTo(map)
+            .bindPopup('🏛️ Universidad Laboral');
+    </script>
+</body>
+</html>
