@@ -7,7 +7,7 @@
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
     <style>
         #map { height: 100vh; width: 100%; margin: 0; padding: 0; }
-        body { margin: 0; padding: 0; }
+        body { margin: 0; padding: 0; font-family: Arial, sans-serif; }
         .foto-popup {
             max-width: 250px;
         }
@@ -16,10 +16,55 @@
             height: auto;
             border-radius: 8px;
         }
+        .bienvenida {
+            position: absolute;
+            top: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: white;
+            padding: 15px 25px;
+            border-radius: 30px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+            z-index: 1000;
+            font-weight: bold;
+            color: #2c3e50;
+            border: 2px solid #3498db;
+            animation: aparecer 1s ease;
+        }
+        @keyframes aparecer {
+            from { opacity: 0; top: 0; }
+            to { opacity: 1; top: 20px; }
+        }
+        .info-btn {
+            position: absolute;
+            bottom: 30px;
+            right: 20px;
+            background: white;
+            padding: 10px 15px;
+            border-radius: 50px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.2);
+            z-index: 1000;
+            font-size: 14px;
+            cursor: pointer;
+            border: 1px solid #ccc;
+        }
+        .info-btn:hover {
+            background: #f0f0f0;
+        }
     </style>
 </head>
 <body>
     <div id="map"></div>
+    
+    <!-- Mensaje de bienvenida -->
+    <div class="bienvenida" id="bienvenida">
+        🗺️ ¡Bienvenido a Gijón! ✨
+    </div>
+    
+    <!-- Botón de información -->
+    <div class="info-btn" onclick="mostrarInfo()">
+        ℹ️ Info
+    </div>
     
     <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
     <script>
@@ -29,7 +74,17 @@
             attribution: 'Mapa: OpenStreetMap'
         }).addTo(map);
         
-        // 🗺️ TODOS LOS SITIOS (SIN LAS TERMAS)
+        // Hacer desaparecer el mensaje de bienvenida a los 5 segundos
+        setTimeout(function() {
+            document.getElementById('bienvenida').style.display = 'none';
+        }, 5000);
+        
+        // Función para mostrar información
+        function mostrarInfo() {
+            alert('🗺️ Mapa Interactivo de Gijón\n📍 Puntos de interés:\n- Elogio del Horizonte\n- Playa San Lorenzo\n- Letronas\n- Puerto Deportivo\n- Playa de Poniente\n- Mujer del Inmigrante\n- Universidad Laboral\n- Casa de Jovellanos\n\n📸 Haz clic en los marcadores para ver las fotos');
+        }
+        
+        // 🗺️ TODOS LOS SITIOS
         var lugares = [
             {
                 coords: [43.5492, -5.6631],
@@ -40,43 +95,43 @@
             {
                 coords: [43.5405, -5.6549],
                 nombre: "Playa San Lorenzo",
-                descripcion: "La playa más famosa de Gijón",
+                descripcion: "🏖️ La playa más famosa de Gijón",
                 foto: "fotos/sanlorenzo.jpg"
             },
             {
                 coords: [43.5441, -5.6651],
                 nombre: "Letronas",
-                descripcion: "El letrero de Gijón junto al puerto",
+                descripcion: "📸 El letrero de Gijón junto al puerto",
                 foto: "fotos/letronas.jpg"
             },
             {
                 coords: [43.5456, -5.6667],
                 nombre: "Puerto Deportivo",
-                descripcion: "Puerto deportivo de Gijón",
+                descripcion: "⛵ Puerto deportivo de Gijón",
                 foto: "fotos/puerto.jpg"
             },
             {
                 coords: [43.5416, -5.6739],
                 nombre: "Playa de Poniente",
-                descripcion: "La otra playa, junto al acuario",
+                descripcion: "🌊 La otra playa, junto al acuario",
                 foto: "fotos/poniente.jpg"
             },
             {
                 coords: [43.5484, -5.6412],
                 nombre: "Mujer del Inmigrante",
-                descripcion: "Monumento en la escalerona del Rinconín",
+                descripcion: "🗿 Monumento en la escalerona del Rinconín",
                 foto: "fotos/mujer.jpg"
             },
             {
                 coords: [43.5241, -5.6135],
                 nombre: "Universidad Laboral",
-                descripcion: "Edificio más grande de España",
+                descripcion: "🏛️ Edificio más grande de España",
                 foto: "fotos/laboral.jpg"
             },
             {
                 coords: [43.5459, -5.6626],
                 nombre: "Casa de Jovellanos",
-                descripcion: "Museo casa natal de Jovellanos",
+                descripcion: "🏠 Museo casa natal de Jovellanos",
                 foto: "fotos/casajovellanos.jpg"
             }
         ];
@@ -95,6 +150,15 @@
             
             marcador.bindPopup(contenido);
         }
+        
+        // Añadir un círculo alrededor de Gijón (para decorar)
+        L.circle([43.5322, -5.6611], {
+            color: '#3498db',
+            fillColor: '#3498db',
+            fillOpacity: 0.1,
+            radius: 2000
+        }).addTo(map).bindPopup("🌍 Gijón");
+        
     </script>
 </body>
 </html>
