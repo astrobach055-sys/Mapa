@@ -8,6 +8,14 @@
     <style>
         #map { height: 100vh; width: 100%; margin: 0; padding: 0; }
         body { margin: 0; padding: 0; }
+        .foto-popup {
+            max-width: 250px;
+        }
+        .foto-popup img {
+            width: 100%;
+            height: auto;
+            border-radius: 8px;
+        }
     </style>
 </head>
 <body>
@@ -15,28 +23,96 @@
     
     <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
     <script>
-        // MAPA DE GIJÓN
         var map = L.map('map').setView([43.5322, -5.6611], 14);
         
         L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
             attribution: 'Mapa: OpenStreetMap'
         }).addTo(map);
         
-        // MARCADOR EN EL CENTRO
-        L.marker([43.5322, -5.6611])
-            .addTo(map)
-            .bindPopup('🏖️ Gijón - Centro')
-            .openPopup();
+        // 🗺️ TODOS LOS SITIOS CON SUS FOTOS
+        var lugares = [
+            {
+                coords: [43.5450, -5.6422],
+                nombre: "Elogio del Horizonte",
+                descripcion: "Escultura de Chillida",
+                foto: "fotos/elogio.jpg"
+            },
+            {
+                coords: [43.5400, -5.6600],
+                nombre: "Playa San Lorenzo",
+                descripcion: "La playa de Gijón",
+                foto: "fotos/sanlorenzo.jpg"
+            },
+            {
+                coords: [43.5455, -5.6610],
+                nombre: "Letronas",
+                descripcion: "El corazón de Gijón",
+                foto: "fotos/letronas.jpg"
+            },
+            {
+                coords: [43.5458, -5.6670],
+                nombre: "Puerto Deportivo",
+                descripcion: "Puerto de Gijón",
+                foto: "fotos/puerto.jpg"
+            },
+            {
+                coords: [43.5430, -5.6780],
+                nombre: "Playa de Poniente",
+                descripcion: "La otra playa",
+                foto: "fotos/poniente.jpg"
+            },
+            {
+                coords: [43.5470, -5.6635],
+                nombre: "Mujer del Inmigrante",
+                descripcion: "Monumento en la escalerona",
+                foto: "fotos/mujer.jpg"
+            },
+            {
+                coords: [43.5250, -5.6100],
+                nombre: "Universidad Laboral",
+                descripcion: "Edificio emblemático",
+                foto: "fotos/laboral.jpg"
+            },
+            {
+                coords: [43.5385, -5.6655],
+                nombre: "Casa de Jovellanos",
+                descripcion: "Museo casa natal",
+                foto: "fotos/casajovellanos.jpg"
+            },
+            {
+                coords: [43.5390, -5.6640],
+                nombre: "Termas Romanas",
+                descripcion: "Campo Valdés",
+                foto: "fotos/termas.jpg"
+            },
+            {
+                coords: [43.5380, -5.6645],
+                nombre: "Campo Valdés",
+                descripcion: "Yacimiento romano",
+                foto: "fotos/campo.jpg"
+            },
+            {
+                coords: [43.5350, -5.6680],
+                nombre: "Cerro de Santa Catalina",
+                descripcion: "Elogio y vistas",
+                foto: "fotos/cerro.jpg"
+            }
+        ];
+        
+        // 🎯 AÑADIR TODOS LOS MARCADORES
+        for(var i = 0; i < lugares.length; i++) {
+            var lugar = lugares[i];
             
-        // PLAYA SAN LORENZO
-        L.marker([43.5400, -5.6500])
-            .addTo(map)
-            .bindPopup('🏄 Playa de San Lorenzo');
+            var marcador = L.marker(lugar.coords).addTo(map);
             
-        // LABORAL
-        L.marker([43.5250, -5.6100])
-            .addTo(map)
-            .bindPopup('🏛️ Universidad Laboral');
+            var contenido = "<b>" + lugar.nombre + "</b><br>" + lugar.descripcion;
+            
+            if(lugar.foto) {
+                contenido += "<br><div class='foto-popup'><img src='" + lugar.foto + "' alt='" + lugar.nombre + "'></div>";
+            }
+            
+            marcador.bindPopup(contenido);
+        }
     </script>
 </body>
 </html>
